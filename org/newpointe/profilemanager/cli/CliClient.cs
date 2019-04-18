@@ -43,7 +43,7 @@ namespace org.newpointe.profilemanager.cli
         }
         
         /// <summary>A dictionary of clients we've logged into.</summary>
-        private Dictionary<string, ApiClient> clients = new Dictionary<string, ApiClient>();
+        private Dictionary<string, ProfileManagerClient> clients = new Dictionary<string, ProfileManagerClient>();
         
         public CliClient() {
             this.RegisterSubcommand("lock", new LockCommand(this));
@@ -180,16 +180,16 @@ namespace org.newpointe.profilemanager.cli
             Console.WriteLine("");
         }
 
-        public async Task<ApiClient> GetLoggedInClient()
+        public async Task<ProfileManagerClient> GetLoggedInClient()
         {
             string serverUrl = GetGlobal("SERVER", "http://localhost");
-            ApiClient client = clients.GetValueOrDefault(serverUrl, null);
+            ProfileManagerClient client = clients.GetValueOrDefault(serverUrl, null);
 
 
             if(client == null) {
                 
                 Console.WriteLine("Using server '{0}'", serverUrl);
-                client = new ApiClient(serverUrl);
+                client = new ProfileManagerClient(serverUrl);
 
                 string username = GetGlobal("USERNAME", null);
                 
